@@ -1,8 +1,7 @@
 CC=g++
 CFLAGS=-Wall -std=c++17
 
-all: hello carres
-
+all: hello carres input string
 
 string: string.cpp
 	$(CC) string.cpp $(CFLAGS) -o string
