@@ -37,26 +37,16 @@ float compute(std::string& input, int depth)
     float res { 0. };
 
     // Recherche des symboles + et - dans la chaine
-    if ((input.find_first_of("+-") != std::string::npos))
+    if ((input.find_last_of("+-") != std::string::npos))
     {
         // Extraction du premier symbole
-        const int start = input.find_first_of("+-");
+        const int start = input.find_last_of("+-");
         // Calcul de la longueur de la deuxieme sous-chaine
         const int lensubstr2 = input.size() - start;
 
         // Separation en sous-chaines
         std::string substr1 = input.substr(0, start);
         std::string substr2 = input.substr(start+1, lensubstr2);
-
-        // Je m'attarde un peu sur ces deux lignes
-        // Si on les retire, le programme va echouer les multiplications
-        // dont l'operande de gauche est negative
-        // J'ajoute ici un "m" devant l'operande negative afin d'avoir un
-        // marqueur qui n'est ni un nombre, ni un operateur
-        // Si j'ajoute un operateur "-" devant l'operande de gauche
-        // je me retrouve avec une recursion infinie (si, si, essayez)
-        if (input[start] == '-')
-            substr2 = "m" + substr2; // Concatenation des chaines de caracteres
 
         // Appel recursif sur les sous chaines
         float res1 = compute(substr1, depth+1);
@@ -69,13 +59,13 @@ float compute(std::string& input, int depth)
         }
         if (input[start] == '-')
         {
-            res = res1 + res2;
+            res = res1 - res2;
         }
     }
     // Recherche des divisions et multiplications
-    else if ((input.find_first_of("*/") != std::string::npos))
+    else if ((input.find_last_of("*/") != std::string::npos))
     {
-        const int start = input.find_first_of("*/");
+        const int start = input.find_last_of("*/");
         const int lensubstr2 = input.size() - start;
 
         std::string substr1 = input.substr(0, start);
@@ -97,14 +87,10 @@ float compute(std::string& input, int depth)
     // Soit ma chaine est un litteral, et je peux la convertir en float
     // Soit ma chaine est vide, et je dois retourner 0.
     else
-    {
-        if (input != "" && input[0] != 'm') // Si ma chaine est non vide et que mon litteral est positif
+    {   
+        if (input != "") // Si ma chaine est non vide
         {
             res = std::stof(input);
-        }
-        else if (input != "" && input[0] == 'm') // Si ma chaine est non vide et que mon litteral est negatif
-        {
-            res = - std::stof(input.substr(1, input.size() - 1));
         }
         else // ma chaine est vide
         {
