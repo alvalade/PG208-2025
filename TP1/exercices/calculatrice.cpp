@@ -96,7 +96,7 @@ float compute(std::string& input, int depth)
     // Aucun operateur n'a ete detecte
     // Soit ma chaine est un litteral, et je peux la convertir en float
     // Soit ma chaine est vide, et je dois retourner 0.
-    else 
+    else
     {
         if (input != "" && input[0] != 'm') // Si ma chaine est non vide et que mon litteral est positif
         {
