@@ -1,7 +1,13 @@
 CC=g++
 CFLAGS=-O0 -g -std=c++17
 
-all: carres array_square display pratique calculatrice 
+all: carres array_square display pratique calculatrice racines racines_overkill
+
+racines: racines.cpp
+	$(CC) $(CFLAGS) racines.cpp -o racines
+
+racines_overkill: racines_overkill.cpp
+	$(CC) $(CFLAGS) racines_overkill.cpp -o racines_overkill
 
 carres: carres.cpp
 	$(CC) $(CFLAGS) carres.cpp -o carres
@@ -22,5 +28,7 @@ clean:
 	@rm -f carres
 	@rm -f array_square
 	@rm -f display
+	@rm -f racines
+	@rm -f racines_overkill
 	@rm -f pratique
 	@rm -f calculatrice
