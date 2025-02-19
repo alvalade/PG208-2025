@@ -7,9 +7,9 @@ all: fibo fichiers operateurs repartition surcharge template
 	$(CC) $(CFLAGS) $< -o $@
 
 clean:
-	@rm -f ofstream
-	@rm -f ifstream
-	@rm -f maps
+	@rm -f fibo
+	@rm -f fichiers
+	@rm -f operateurs
 	@rm -f repartition
-	@rm -f surcharges
-	@rm -f templates
+	@rm -f surcharge
+	@rm -f template
