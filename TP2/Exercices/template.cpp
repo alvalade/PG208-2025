@@ -58,7 +58,7 @@ void display(std::unordered_map<K, V>& m)
 int main()
 {
     std::vector<int> test_int {1,2,3};
-    std::vector<std::string> test_str {"fuck ", "tumors"};
+    std::vector<std::string> test_str {"foo ", "bar"};
 
     std::cout << total(test_int) << std::endl;
     std::cout << total(test_str) << std::endl;
