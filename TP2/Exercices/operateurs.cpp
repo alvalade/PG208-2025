@@ -1,6 +1,6 @@
 /**
  * @file operateurs.cpp
- * @author your name (you@domain.com)
+ * @author Alexandre Valade (alvalade@enseirb-matmeca.fr)
  * @brief 
  * @version 0.1
  * @date 2025-02-10

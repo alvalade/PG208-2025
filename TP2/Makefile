@@ -1,5 +1,5 @@
 CC=g++
-CFLAGS=-Wall -std=c++17
+CFLAGS=-Wall -g -O0 -std=c++17
 
 all: ofstream ifstream maps surcharges templates
 
