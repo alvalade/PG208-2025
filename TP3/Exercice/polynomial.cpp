@@ -17,6 +17,8 @@
 // CONSTRUCTEURS
 // =============================================================================
 
+// Ce constructeur est juste la pour le debug
+// L'utiliser, c'est se garantir une segfault
 Polynomial::Polynomial()
 {
     std::cout << "Hello, World!" << std::endl;
@@ -51,6 +53,19 @@ Polynomial
 
 // =============================================================================
 // METHODES
+// 
+// J'ai choisi de placer les appels a Polynomial::reduct() ici
+// La raison : c'est ce qui evite le plus d'erreurs
+//
+// Ca cree beaucoup d'appels inutiles, dont on aimerait se passer
+// mais dans la mesure ou la methode est privee, on ne peut pas
+// l'appeler comme on le souhaite.
+//
+// En forcant chaque appel a degree() ou coeffs() a verifier les
+// coefficients et faire une reduction si necessaire, on s'evite
+// bien des noeuds au cerveau lors des calculs via les operateurs
+// operator+, operator-, operator*, etc.
+//
 // =============================================================================
 
 int Polynomial
@@ -65,6 +80,7 @@ int Polynomial
 std::vector<float> Polynomial
 ::coeffs()
 {
+    reduct();
     return m_coeffs;
 }
 
@@ -128,6 +144,7 @@ Polynomial pow(Polynomial& p, const unsigned int power)
 // OPERATEURS
 // =============================================================================
 
+// Petite fonction pour rendre l'affichage plus propre
 std::string format_coeff(float coeff)
 {
     if (coeff == 1.)
@@ -147,20 +164,21 @@ std::ostream& operator<<(std::ostream& os, Polynomial& p)
     {
         if (coeffs[i] != 0)
         {
-            if (power > 1)
+            if (power > 1) // Terme a puissance
             {
                 os << format_coeff(coeffs[i]) << "x^" << power;
             }
-            else if (power == 1)
+            else if (power == 1) // Terme lineaire : pas de coefficient
             {
                 os << format_coeff(coeffs[i]) << "x";
             }
-            else
+            else // Terme constant : pas de x
             {
                 os << coeffs[i];
             }
         }
-        if (i < coeffs.size() - 1 && coeffs[i+1] != 0)
+        // Ajoute un "+" si ce n'est pas le dernier terme
+        if (i < coeffs.size() - 1 && coeffs[i+1] != 0) 
             std::cout << " + ";
         power--;
     }
@@ -188,6 +206,8 @@ Polynomial Polynomial
 {
     std::vector<float> coeffs_out;
     unsigned int max_degree = 0;
+
+    // Recherche du polynome de plus haut degre
     if (this->degree() > other.degree())
     {
         coeffs_out.resize(this->degree()+1);
@@ -205,6 +225,7 @@ Polynomial Polynomial
     unsigned int delta_this = max_degree - this->degree();
     unsigned int delta_other = max_degree - other.degree();
 
+    // Somme des deux polynomes, en partant du plus haut degre
     for (unsigned int i { 0 } ; i <= max_degree ; i++)
     {
         if (i >= delta_this)
@@ -277,6 +298,11 @@ Polynomial Polynomial
 
 // - - - - - - - - - - - - - - - - - - -
 
+// Principe fondamental de la programmation :
+// Plus on ecrit de code, plus on risque d'introduire un bug
+//
+// Par consequent, on va juste se resservir de l'operator+
+// pour faire notre operator+=
 void Polynomial
 ::operator+=(Polynomial& other)
 {
@@ -286,6 +312,11 @@ void Polynomial
 
 // - - - - - - - - - - - - - - - - - - -
 
+// Principe fondamental de la programmation :
+// Plus on ecrit de code, plus on risque d'introduire un bug
+//
+// Par consequent, on va juste se resservir de l'operator-
+// pour faire notre operator-=
 void Polynomial
 ::operator-=(Polynomial& other)
 {
