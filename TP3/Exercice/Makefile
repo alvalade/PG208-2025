@@ -15,3 +15,4 @@ main.o : main.cpp polynomial.hpp
 
 clean :
 	@rm -f *.o
+	@rm -f main
