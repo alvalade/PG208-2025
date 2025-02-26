@@ -13,6 +13,7 @@
 #include <array>
 #include <vector>
 #include <iostream>
+#include <complex>
 
 std::ostream& operator<<(std::ostream& os, std::vector<float> v)
 {
@@ -90,6 +91,27 @@ int main()
     Polynomial diff {p1 - p2};
 
     std::cout << p1 << " - " << p2 << " = " << diff << std::endl;
+
+    lb();
+    
+    std::cout << "-- Test Application Numerique reelle" << std::endl;
+    float val {1.};
+    float res {0.};
+
+    res = p1(val);
+
+    std::cout << p1 << " ( " << val << " ) = " << res << std::endl;
+
+    lb();
+    
+    std::cout << "-- Test Application Numerique complexe" << std::endl;
+
+    std::complex<float> cval {0., 1.};
+    std::complex<float> cres {0., 0.};
+
+    cres = p1(cval);
+
+    std::cout << p1 << " ( " << cval << " ) = " << cres << std::endl;
 
     lb();
 

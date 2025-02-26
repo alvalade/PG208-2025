@@ -12,6 +12,7 @@
 #ifndef POLYNOMIAL_HPP_
 #define POLYNOMIAL_HPP_
 
+#include <complex>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -46,6 +47,7 @@ public:
     friend std::ostream& operator<<(std::ostream& os, Polynomial& p);
 
     float operator()(float x);
+    std::complex<float> operator()(std::complex<float>& x);
 
     Polynomial operator+ (Polynomial& other);
     Polynomial operator- (Polynomial& other);

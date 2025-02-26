@@ -11,6 +11,7 @@
 
 #include "polynomial.hpp"
 #include <algorithm>
+#include <complex>
 
 
 // =============================================================================
@@ -199,6 +200,34 @@ float Polynomial
     return res;
 }
 
+std::complex<float> Polynomial
+::operator()(std::complex<float>& x)
+{
+    std::complex<float> res {0};
+    for (std::size_t i{m_coeffs.size()}; i>0 ; i--) 
+    {
+        res = res*x + m_coeffs[i-1];
+    }
+
+    return res;
+}
+
+// - - - - - - - - - - - - - - - - - - -
+// Concernant les operateurs +, - et *
+//
+// On a le choix de les mettre dans la classe ou non
+// C'est meme plus risque de les mettre dedans, puisque l'on
+// autorise l'acces aux membres prives d'un des deux polynomes manipules
+//
+// On prend moins de risques qu'avec un friend qui peut tout manipuler
+// mais il existe quand meme
+//
+// Une implementation plus proche des bonnes pratiques ici aurait ete d'en faire des
+// fonctions libres (= pas membres d'une classe), avec le prototype suivant
+//
+//   Polynomial operator+(Polynomial& p1, Polynomial& p2);
+// 
+// De ce fait, on s'evite tout acces aux membres prives
 // - - - - - - - - - - - - - - - - - - -
 
 Polynomial Polynomial
@@ -296,6 +325,20 @@ Polynomial Polynomial
     return out;
 }
 
+// - - - - - - - - - - - - - - - - - - -
+// Concernant les operateurs +=, -= et *=
+//
+// Meme remarque que precedemment, en temps normal on a le droit de 
+// definir l'operateur comme membre ou non de la classe
+//
+// Cependant, vous remarquerez que nous n'avons aucune methode publique
+// permettant de modifier les coefficients de notre Polynomial
+//
+// Par consequent, le plus simple pour venir appliquer les modifications
+// est d'en faire une methode de la classe
+//
+// Si l'operateur est membre de la classe, son argument "element de gauche"
+// sera TOUJOURS l'instance appelant l'operateur
 // - - - - - - - - - - - - - - - - - - -
 
 // Principe fondamental de la programmation :
